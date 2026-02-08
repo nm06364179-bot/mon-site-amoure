@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Pour mon amour ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  margin:0;
+  height:100vh;
+  background:radial-gradient(circle,#b30000,#4d0000);
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+}
+
+/* COEURS */
+.heart{
+  position:absolute;
+  color:#ff4d6d;
+  font-size:18px;
+  animation:fall linear infinite;
+}
+@keyframes fall{
+  from{transform:translateY(-10vh);opacity:1}
+  to{transform:translateY(110vh);opacity:0}
+}
+
+/* ENVELOPPE */
+.envelope{
+  width:260px;
+  height:170px;
+  background:white;
+  border-radius:12px;
+  position:relative;
+  cursor:pointer;
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+.flap{
+  position:absolute;
+  top:0;left:0;
+  width:0;height:0;
+  border-left:130px solid transparent;
+  border-right:130px solid transparent;
+  border-top:90px solid #222;
+  transition:1s;
+}
+.envelope.open .flap{
+  transform:rotateX(180deg);
+  transform-origin:top;
+}
+.seal{
+  position:absolute;
+  top:65px;left:110px;
+  width:40px;height:40px;
+  background:red;
+  border-radius:50%;
+}
+
+/* LETTRES */
+.card{
+  position:absolute;
+  width:320px;
+  max-height:80vh;
+  background:#1e3cff;
+  border-radius:20px;
+  padding:20px;
+  text-align:center;
+  display:none;
+  overflow-y:auto;
+  animation:fadeIn 1s forwards;
+}
+@keyframes fadeIn{
+  from{opacity:0;transform:scale(.8)}
+  to{opacity:1;transform:scale(1)}
+}
+
+button{
+  padding:12px 25px;
+  margin:10px;
+  border:none;
+  border-radius:25px;
+  font-size:16px;
+  cursor:pointer;
+}
+.yes{background:#00e676}
+.no{background:#ff1744;color:white}
+
+.final p{
+  text-align:left;
+  line-height:1.6;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ENVELOPPE -->
+<div class="envelope" id="env">
+  <div class="flap"></div>
+  <div class="seal"></div>
+</div>
+
+<!-- LETTRE CHOIX -->
+<div class="card" id="choice">
+  <h2>❤️ À mon amour ❤️</h2>
+  <p>Veux-tu lire ce que mon cœur t’a écrit ?</p>
+  <button class="yes" onclick="goYes()">OUI</button>
+  <button class="no" onclick="goNo()">NON</button>
+</div>
+
+<!-- LETTRE FINALE -->
+<div class="card final" id="final">
+  <audio id="music" loop>
+    <source src="musique.mp3" type="audio/mpeg">
+  </audio>
+
+  <h2>❤️ Je t’aime ❤️</h2>
+  <p>
+Mon amour ❤️,<br><br>
+Tu me manques plus que les mots ne peuvent le dire.  
+Même loin, tu es toujours dans mon cœur et dans mes pensées.  
+En cette Saint-Valentin, je veux que tu saches que tu es mon plus beau cadeau.  
+Je te choisis aujourd’hui, demain et pour toujours.<br><br>
+❤️ Je t’aime profondément ❤️
+  </p>
+</div>
+
+<script>
+/* COEURS */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(3+Math.random()*3)+"s";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},300);
+
+/* ENVELOPPE */
+document.getElementById("env").addEventListener("click",()=>{
+  const env=document.getElementById("env");
+  env.classList.add("open");
+  setTimeout(()=>{
+    env.style.display="none";
+    document.getElementById("choice").style.display="block";
+  },1000);
+});
+
+/* BOUTONS */
+function goNo(){
+  window.location.href="https://www.google.com";
+}
+
+function goYes(){
+  document.getElementById("choice").style.display="none";
+  document.getElementById("final").style.display="block";
+
+  const music=document.getElementById("music");
+  music.play().catch(()=>{});
+}
+</script>
+
+</body>
+</html>
+
